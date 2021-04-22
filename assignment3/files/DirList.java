@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * 
+ * Lists all file paths in directory specified in command line
+ * 
+ * @author Gavin Shrestha
+ *
+ */
+
 public class DirList {
 
 	public static void main(String[] args) {
