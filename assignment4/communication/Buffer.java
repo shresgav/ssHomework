@@ -21,7 +21,7 @@ public class Buffer {
 			buffer.add(e);
 			notify();			
 		} catch (InterruptedException e1) {
-			e1.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 	}
 	
@@ -35,8 +35,8 @@ public class Buffer {
 			notify();
 			return front;
 		} catch (InterruptedException e1) {
-			e1.printStackTrace();
+			Thread.currentThread().interrupt();
+			return null;
 		}
-		return null;
 	}
 }

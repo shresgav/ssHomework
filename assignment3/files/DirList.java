@@ -23,6 +23,8 @@ public class DirList {
 		for (String s : files) {
 			System.out.println(s);
 		}
+		
+		System.out.print("Num files: " + files.size());
 	}
 	
 	public static List<String> createFileList(String s) {

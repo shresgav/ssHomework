@@ -27,7 +27,7 @@ public class DeadlockExample {
 			public void run() {
 				synchronized(y) {
 					try {
-						Thread.sleep(200);
+						Thread.sleep(100);
 						System.out.println("Lock acquired for y");
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block

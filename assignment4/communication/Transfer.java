@@ -9,7 +9,12 @@ public class Transfer {
 		
 		p.start();
 		c.start();
+		try {
+			p.join();
+			c.interrupt();
+		} catch (InterruptedException e) {}
 		
+		System.out.println("Finished program");
 	}
 
 }

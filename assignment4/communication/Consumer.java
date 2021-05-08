@@ -10,6 +10,7 @@ public class Consumer extends Thread {
 	public void run() {
 		while (!Thread.currentThread().isInterrupted()) {
 			Integer i = buffer.delete();
+			if (i == null) break;
 			System.out.println("Removed " + i + " from buffer");
 		}
 	}
