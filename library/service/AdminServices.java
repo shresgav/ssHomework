@@ -136,6 +136,22 @@ public class AdminServices {
 		}
 	}
 	
+	public LibraryBranch findBranch(String name) throws SQLException {
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			LibraryBranchDAO lbDAO = new LibraryBranchDAO(conn);
+			return lbDAO.readLibraryByName(name);
+		} catch(Exception e) {
+			e.printStackTrace();
+			conn.rollback();
+			System.out.println("Failed to connect to server");
+		} finally {
+			conn.close();
+		}
+		return null;
+	}
+	
 	/////////////////// LIBRARY BRANCH REQUESTS (END) ////////////////////
 	
 	

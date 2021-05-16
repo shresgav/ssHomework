@@ -20,7 +20,7 @@ public class AuthorDAO extends BaseDAO<Author> {
 	}
 	
 	public Author readAuthorByName(String name) throws SQLException {
-		 List<Author> aList = read("SELECT * from tbl_author WHERE name = ?", new Object[] {name});
+		 List<Author> aList = read("SELECT * from tbl_author WHERE authorName = ?", new Object[] {name});
 		 if (aList.isEmpty()) return null;
 		return aList.get(0);
 	}
@@ -32,8 +32,8 @@ public class AuthorDAO extends BaseDAO<Author> {
 		// if (!rs.isBeforFirst) {...} else { do {...} while(rs.next()) }
 		while(rs.next()) {
 			Author author = new Author();
-			author.setAuthorId(rs.getInt("authId"));
-			author.setAuthorName(rs.getString("name"));
+			author.setAuthorId(rs.getInt("authorId"));
+			author.setAuthorName(rs.getString("authorName"));
 			authors.add(author);
 		}
 		return authors;

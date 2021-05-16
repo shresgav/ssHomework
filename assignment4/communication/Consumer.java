@@ -12,6 +12,12 @@ public class Consumer extends Thread {
 			Integer i = buffer.delete();
 			if (i == null) break;
 			System.out.println("Removed " + i + " from buffer");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

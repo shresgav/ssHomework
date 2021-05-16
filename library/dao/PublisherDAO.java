@@ -20,7 +20,7 @@ public class PublisherDAO extends BaseDAO<Publisher>{
 	}
 	
 	public void updatePublisher(Publisher pub) throws SQLException {
-		update("UPDATE tbl_publisher SET publisherName = ?, publisherAddress = ?, publisherPhone WHERE publisherId = ?",
+		update("UPDATE tbl_publisher SET publisherName = ?, publisherAddress = ?, publisherPhone = ? WHERE publisherId = ?",
 				new Object[] {pub.getName(), pub.getAddress(), pub.getPhone(), pub.getId()});
 	}
 	
@@ -45,9 +45,9 @@ public class PublisherDAO extends BaseDAO<Publisher>{
 		// if (!rs.isBeforFirst) {...} else { do {...} while(rs.next()) }
 		while(rs.next()) {
 			Publisher pub = new Publisher();
-			pub.setAddress(rs.getString("address"));
+			pub.setAddress(rs.getString("publisherAddress"));
 			pub.setId(rs.getInt("publisherId"));
-			pub.setPhone(rs.getString("phone"));
+			pub.setPhone(rs.getString("publisherPhone"));
 			pub.setName(rs.getString("publisherName"));
 			publishers.add(pub);
 		}

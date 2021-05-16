@@ -39,7 +39,8 @@ public class LibraryBranch {
 	
 	@Override
 	public String toString() {
-		return branchName + ", " + branchAddress;
+		String s = (branchAddress == null) ? branchName : branchName + ", " + branchAddress;
+		return s;
 	}
 	@Override
 	public int hashCode() {

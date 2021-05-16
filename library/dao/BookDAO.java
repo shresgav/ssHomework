@@ -18,7 +18,7 @@ public class BookDAO extends BaseDAO<Book>{
 	}
 	
 	public void updateBook(Book b) throws SQLException {
-		update("UPDATE tbl_book SET title = ?, author = ? WHERE bookId= ?",
+		update("UPDATE tbl_book SET title = ?, authId = ? WHERE bookId= ?",
 				new Object[] {b.getTitle(), b.getAuthorId(), b.getBookId()});
 	}
 	

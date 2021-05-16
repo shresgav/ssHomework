@@ -28,7 +28,7 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
 	}
 	
 	public Borrower readBorrowerByCardNo(Integer cardNo) throws SQLException {
-		List<Borrower> blist = read("SELECT * FROM tbl_borrower WHERE cardNo", new Object[] {cardNo});
+		List<Borrower> blist = read("SELECT * FROM tbl_borrower WHERE cardNo = ?", new Object[] {cardNo});
 		if (blist.isEmpty()) {
 			return null;
 		}

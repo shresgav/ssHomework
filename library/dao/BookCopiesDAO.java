@@ -37,7 +37,7 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 	
 	
 	public BookCopies readBookCopies(Integer bookId, Integer branchId) throws SQLException {
-		 List<BookCopies> bcList = read("SELECT * from tbl_book_copies WHERE bookId = ? AND branchId = ?", new Object[] {bookId, branchId});
+		 List<BookCopies> bcList = read("SELECT * FROM tbl_book_copies WHERE bookId = ? AND branchId = ?", new Object[] {bookId, branchId});
 		 if (bcList.isEmpty()) {
 			 return null;
 		 }

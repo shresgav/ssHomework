@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 // Is Hibernate something we'll be looking into later on? 
@@ -18,13 +19,12 @@ public abstract class BaseDAO<T> {
 	
 	public Integer update(String sql, Object[] args) throws SQLException {
 		PreparedStatement statement =
-				conn.prepareStatement(sql);
+				conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		int count = 1;
 		for (Object o: args) {
 			statement.setObject(count, o);
 			count++;
 		}
-		System.out.println(statement);
 		statement.executeUpdate();
 	    try (ResultSet keys = statement.getGeneratedKeys()) {
 	    	if (keys.next()) return keys.getInt(1);
