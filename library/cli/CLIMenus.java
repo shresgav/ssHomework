@@ -508,13 +508,13 @@ public class CLIMenus {
 			while (!(service.findBranch(name) == null)) {
 				System.out.println("This branch name already exists. Enter a new name or q to quit.");
 				name = sc.nextLine();
-				if (name.equals("q")) {
-					System.out.println("Operation canceled");
-					return;
-				}
 			}
 		} catch (SQLException e1) {
 			System.out.println("Connection to server failed.");
+			return;
+		}
+		if (name.equals("q")) {
+			System.out.println("Operation canceled");
 			return;
 		}
 		System.out.println("Enter a branch address or enter N/A for null:");
