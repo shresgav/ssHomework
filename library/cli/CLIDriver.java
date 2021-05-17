@@ -71,7 +71,7 @@ public class CLIDriver {
 			// BORROWER INTERFACE
 			if (option == 3) {
 				Integer cardNo = readCardNo();
-				if (cardNo == -1) continue;
+				if (cardNo == 0) continue;
 				Integer borrowerOption = null;
 				do {
 					cli.borr1Menu(sc);
@@ -91,7 +91,9 @@ public class CLIDriver {
 					}
 				} while (borrowerOption != 3);
 			}
+			if (option == 0) break;
 		}
+		sc.close();
 	}
 	
 	// Reads user input with some error checking
@@ -367,7 +369,7 @@ public class CLIDriver {
 		}
 	}
 	
-	// Read card number until 
+	// Read card number until correct number input
 	private static Integer readCardNo() {
 		System.out.println("Enter your card number or -1 to quit: ");
 		Integer cardNo = readOption(sc);
@@ -380,9 +382,9 @@ public class CLIDriver {
 				cardNums.add(borrower.getCardNo());
 			}
 			while (!cardNums.contains(cardNo)) {
-				System.out.println("Card number does not exist. Please re-enter your card number or -1 to quit:");
+				System.out.println("Card number does not exist. Please re-enter your card number or 0 to quit:");
 				cardNo = readOption(sc);
-				if (cardNo == -1) return -1;
+				if (cardNo == 0) return 0;
 			}
 		} catch (SQLException e) {
 			System.out.println("Connection to database failed");

@@ -255,6 +255,7 @@ public class AdminServices {
 		return null;
 	}
 	
+	// Batch statement would be better here
 	public void returnBook(Integer cardNo, Integer bookId, Integer branchId) throws SQLException {
 		Connection conn = null;
 		try {

@@ -18,7 +18,7 @@ import library.service.AdminServices;
 
 public class CLIMenus {
 	public void mainMenu() {
-		System.out.println("Welcome to the GCIT Library Management System. Which category of a user are you?");
+		System.out.println("Welcome to the GCIT Library Management System. Which category of a user are you? Enter 0 to quit.");
 		System.out.println("1. Librarian");
 		System.out.println("2. Administrator");
 		System.out.println("3. Borrower");
@@ -49,10 +49,22 @@ public class CLIMenus {
 				+ " and Branch Name: " + lib.getBranchName() + ". Enter quit at any prompt to cancel operation");
 		System.out.println("Please enter new branch name or enter N/A for no change:");
 		String name = sc.nextLine();
+		
+		AdminServices service = new AdminServices();
+		try {
+			while (!(service.findBranch(name) == null)) {
+				System.out.println("This branch name already exists. Enter a new name or 'quit' to quit.");
+				name = sc.nextLine();
+			}
+		} catch (SQLException e1) {
+			System.out.println("Connection to server failed.");
+			return false;
+		}
+		
 		if (name.equals("quit")) {
 			return false;
 		}
-
+		
 		System.out.println("Please enter new branch address or enter N/A for no change:");
 		String address = sc.nextLine();
 		if (address.equals("quit")) {
@@ -73,7 +85,6 @@ public class CLIMenus {
 			newLib.setBranchAddress(address);
 		}
 
-		AdminServices service = new AdminServices();
 		try {
 			service.updateBranch(newLib);
 		} catch (Exception e) {
@@ -91,26 +102,31 @@ public class CLIMenus {
 	}
 
 	// Perhaps this method could be abstracted better
-	public void updateBookCopies(Book b, LibraryBranch lib, Scanner sc) throws SQLException {
+	public void updateBookCopies(Book b, LibraryBranch lib, Scanner sc) {
 		AdminServices service = new AdminServices();
-		BookCopies bc = service.getNumBooks(b, lib);
-		Integer numCopies = (bc == null) ? 0 : bc.getNoOfCopies();
-		System.out.println("Existing number of copies of book: " + numCopies.toString());
-		System.out.println("Enter new number of copies of book: ");
-		Integer newNumCopies = null;
-		while (newNumCopies == null) {
-			try {
-				newNumCopies = Integer.parseInt(sc.nextLine());
-			} catch (Exception e) {
-				System.out.println("Invalid input. Try again.");
+		BookCopies bc;
+		try {
+			bc = service.getNumBooks(b, lib);
+			Integer numCopies = (bc == null) ? 0 : bc.getNoOfCopies();
+			System.out.println("Existing number of copies of book: " + numCopies.toString());
+			System.out.println("Enter new number of copies of book: ");
+			Integer newNumCopies = null;
+			while (newNumCopies == null) {
+				try {
+					newNumCopies = Integer.parseInt(sc.nextLine());
+				} catch (Exception e) {
+					System.out.println("Invalid input. Try again.");
+				}
 			}
-		}
-		if (bc == null) {
-			bc = new BookCopies(b.getBookId(), lib.getBranchId(), newNumCopies);
-			service.insertBookCopies(bc);
-		} else {
-			bc.setNoOfCopies(newNumCopies);
-			service.updateBookCopies(bc);
+			if (bc == null) {
+				bc = new BookCopies(b.getBookId(), lib.getBranchId(), newNumCopies);
+				service.insertBookCopies(bc);
+			} else {
+				bc.setNoOfCopies(newNumCopies);
+				service.updateBookCopies(bc);
+			}
+		} catch (SQLException e1) {
+			System.out.println("Connection to database failed");
 		}
 	}
 
@@ -255,6 +271,8 @@ public class CLIMenus {
 		System.out.println("4. Quit to previous");
 	}
 
+	/////////////////// ADMIN BOOK COMMANDS ///////////////////
+	
 	public boolean adminAddBook(Scanner sc) {
 		AdminServices service = new AdminServices();
 		System.out.println(
@@ -384,6 +402,8 @@ public class CLIMenus {
 		}
 	}
 	
+	/////////////////// ADMIN BOOK COMMANDS (END) ///////////////////
+	
 	////////////////// ADMIN PUBLISHER MENUS /////////////////////
 
 	public void adminAddPublisher(Scanner sc) {
@@ -494,6 +514,8 @@ public class CLIMenus {
 			}
 		}
 	}
+	
+	////////////////// ADMIN PUBLISHER MENUS (END) /////////////////////
 
 	/////////////// ADMIN LIBRARY BRANCH COMMANDS ///////////////
 	
@@ -596,7 +618,9 @@ public class CLIMenus {
 		}
 	}
 
-	////////////////// ADMIN BORROWER MENUS ////////////////////
+	/////////////// ADMIN LIBRARY BRANCH COMMANDS (END) ///////////////
+	
+	////////////////// ADMIN BORROWER COMMANDS ////////////////////
 
 	public void adminBorrowerMenu(List<Borrower> bors) {
 		System.out.println("Choose a borrower:");
@@ -756,7 +780,8 @@ public class CLIMenus {
 			}
 		}
 	}
-
+	////////////////// ADMIN BORROWER COMMANDS END ////////////////////
+	
 	////////////// ADMIN OVERRIDE DUE DATE MENUS ////////////////
 
 	public void adminMenuChangeDueDate(List<Borrower> borList) {
